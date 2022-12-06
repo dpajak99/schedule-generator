@@ -1,7 +1,10 @@
 package org.example.models;
 
+import lombok.Getter;
+
+@Getter
 public class TemplateFile {
-    String htmlContent;
-    String cssContent;
+    private String htmlContent;
+
     
 }

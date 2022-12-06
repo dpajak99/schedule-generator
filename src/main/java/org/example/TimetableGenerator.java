@@ -21,7 +21,7 @@ public class TimetableGenerator {
         String destination = "/home/dpajak99/Storage/GitHub/inzynierka/timetablegenerator/timetablegenerator/output/output.pdf";
 
         ConverterProperties converterProperties = new ConverterProperties();
-        converterProperties.setBaseUri("baseUri");
+        converterProperties.setBaseUri("/home/dpajak99/Storage/GitHub/inzynierka/timetablegenerator/timetablegenerator/input/test_template/");
         PdfWriter pdfWriter = new PdfWriter(destination);
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
         PdfMerger pdfMerger = new PdfMerger(pdfDocument);
