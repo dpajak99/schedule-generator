@@ -1,4 +1,4 @@
-package org.example.dtos;
+package org.example.models.themyleaf;
 
 import lombok.Getter;
 
@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Objects;
 @Getter
 public class MergedDeparture {
-    private DepartureDto departureDto;
+    private Departure departureDto;
     
     private List<String> days;
     
-    public MergedDeparture(DepartureDto departureDto, List<String> days) {
+    public MergedDeparture(Departure departureDto, List<String> days) {
         this.days = days;
         this.departureDto = departureDto;
     }

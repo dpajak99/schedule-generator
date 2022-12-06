@@ -1,4 +1,4 @@
-package org.example.dtos;
+package org.example.models.themyleaf;
 
 import lombok.Getter;
 

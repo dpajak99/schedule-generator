@@ -1,0 +1,27 @@
+package org.example.infra.entity;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
+
+@Getter
+@NoArgsConstructor
+@Entity
+@Table(name = "schedule_versions", schema="schedule")
+public class TimetableVersionEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
+    private CompanyEntity company;
+
+    @Column(name = "date_start")
+    private Date dateStart;
+
+    @Column(name = "date")
+    private Date dateEnd;
+}

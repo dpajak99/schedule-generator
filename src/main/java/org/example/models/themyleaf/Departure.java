@@ -1,4 +1,4 @@
-package org.example.dtos;
+package org.example.models.themyleaf;
 
 import lombok.Getter;
 
@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 @Getter
-public class DepartureDto implements Comparable<DepartureDto> {
+public class Departure implements Comparable<Departure> {
     private int timeInMinutes;
     private List<String> symbols;
     
@@ -19,7 +19,7 @@ public class DepartureDto implements Comparable<DepartureDto> {
     }
 
     @Override
-    public int compareTo(DepartureDto other) {
+    public int compareTo(Departure other) {
         int timeCompare = Integer.compare(timeInMinutes, other.timeInMinutes);
         int symbolsCompare = symbols.toString().compareTo(other.symbols.toString());
         return timeCompare != 0 ? timeCompare : symbolsCompare;
@@ -28,8 +28,8 @@ public class DepartureDto implements Comparable<DepartureDto> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof DepartureDto)) return false;
-        DepartureDto that = (DepartureDto) o;
+        if (!(o instanceof Departure)) return false;
+        Departure that = (Departure) o;
         return timeInMinutes == that.timeInMinutes && Objects.equals(symbols, that.symbols);
     }
 

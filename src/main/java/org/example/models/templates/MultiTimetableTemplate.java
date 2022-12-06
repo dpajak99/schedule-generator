@@ -1,16 +1,15 @@
 package org.example.models.templates;
 
 import lombok.Getter;
-import lombok.Setter;
-import org.example.dtos.CurrentStopDto;
-import org.example.dtos.SymbolDescription;
+import org.example.models.themyleaf.CurrentStop;
+import org.example.models.themyleaf.SymbolDescription;
 
 import java.util.Date;
 import java.util.List;
 
 @Getter
 public class MultiTimetableTemplate implements TimetableTemplate {
-    private CurrentStopDto currentStop;
+    private CurrentStop currentStop;
     private List<SingleTimetableTemplate> singleTimetableTemplates;
     private List<SymbolDescription> symbolDescriptions;
     
