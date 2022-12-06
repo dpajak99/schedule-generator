@@ -38,3 +38,8 @@ Zespół składa się z trzech osób, które będą odpowiedzialne za:
 4. **Inne**
     - **Generowanie szablonów html** - [Themyleaf]({https://www.thymeleaf.org/)
     - **Generowanie PDF** - [OpenPDF](https://github.com/LibrePDF/OpenPDF)
+
+
+# Notes
+https://github.com/itext/itext7
+https://github.com/itext/i7j-pdfhtml
