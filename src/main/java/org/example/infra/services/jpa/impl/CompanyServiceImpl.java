@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
     
     @Autowired
     public CompanyServiceImpl(CompanyRepository companyRepository) {

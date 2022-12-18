@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/pdf/generate/timetable")
-public class TimetableGeneratorController {
+@RequestMapping("/pdf/generate")
+public class PdfGeneratorController {
     private final TimetableGeneratorService timetableGeneratorService;
     
     @Autowired
-    public TimetableGeneratorController(TimetableGeneratorServiceImpl timetableGeneratorService) {
+    public PdfGeneratorController(TimetableGeneratorServiceImpl timetableGeneratorService) {
         this.timetableGeneratorService = timetableGeneratorService;
     }
 
-    @PostMapping({"/"})
+    @PostMapping({"/timetable"})
     public ResponseEntity<GenerateTimetableResponse> generateTimetable(GenerateTimetableRequest generateTimetableRequest) {
         try {
             GenerateTimetableResponse generateTimetableResponse = timetableGeneratorService.generateTimetable(generateTimetableRequest);
@@ -33,6 +33,4 @@ public class TimetableGeneratorController {
             return new ResponseEntity<>(new GenerateTimetableResponseError(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    
 }
