@@ -1,5 +1,12 @@
 server:
-  port: 8082
+  port: 8080
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  api-docs:
+    enabled: true
 
 spring:
   datasource:
@@ -7,12 +14,17 @@ spring:
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
+    testWhileIdle: true
+    validationQuery: SELECT 1
     
   jpa:
     show-sql: false
     hibernate:
       ddl-auto: update
-
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        
     properties:
       hibernate:
         format_sql: true
