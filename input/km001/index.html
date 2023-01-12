@@ -1,0 +1,202 @@
+<table class="km001_main-table"> 
+  <tr>
+    <td class="km001_header-cell km001_header-cell-left km001_table-no-border">
+      <img src="./km001/img/logo.png" alt="logo" class="km001_logo"/>
+    </td>
+    <td class="km001_header-cell km001_header-cell-right km001_table-no-border">
+      <center>
+        <p>"Koleje Małopolskie" sp. z.o.o.</p>
+        <p>ul. Wodna 2</p>
+        <p>30-556 Kraków</p>
+      </center>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" class="km001_header-title km001_no-border-top">
+      <center><p class="km001_bus-stop-name">
+        Przystanek:
+        <span th:text="${timetable.getStop().getName()}"></span>
+        <span th:if="${timetable.isStopOnRequest() == 1}"> n/ż</span>
+      </p></center>
+<!--      <center class="km001_version-name" th:if="${!this.hasMultipleDates()}">&lt;!&ndash;-->
+<!--        &ndash;&gt;Rozkład ważny od-->
+<!--        <span th:text="${mainRouteTable.getRoute().getDateStart()}"></span>-->
+<!--        <span th:if="${mainRouteTable.getRoute().getDateEnd() != 'err'}"> do <span th:text="${mainRouteTable.getRoute().getDateEnd()}"></span></span>-->
+<!--      </center>-->
+    </td>
+  </tr>
+  <span th:each="routeTimetable,iter: ${timetable.getSchedules()}" th:remove="tag">
+  <tr>
+    <td colspan="3" class="km001_details-row">
+      <table width="100%" class="km001_table-no-border">
+        <tr>
+          <td rowspan="2" class="km001_bus-line-box km001_details-row">
+            <center><span class="km001_bus-line-name" th:text="${routeTimetable.getLine().getName()}"></span></center>
+          </td>
+          <td class="km001_route-cell__destination">
+            Kierunek: <span th:text="${routeTimetable.getRoute().getName()}"></span>
+          </td>
+        </tr>
+        <tr>
+          <td class="km001_route-cell__details" valign="top">
+            <p class="km001_version-name" style="margin-bottom: 5px; font-weight: bold; color: #28395F"><!--
+              --><span th:if="${routeTimetable.getRoute().getComments() != null}"><!--
+                 --><span style="color: red" th:text="${routeTimetable.getRoute().getComments()}"></span><!--
+                 --><br /><!--
+              --></span><!--
+<!--              &ndash;&gt;<span th:if="${this.hasMultipleDates()}">&lt;!&ndash;-->
+<!--                 &ndash;&gt;Rozkład ważny od &lt;!&ndash;-->
+<!--                 &ndash;&gt;<span th:text="${routeTable.getRoute().getDateStart()}"></span>&lt;!&ndash;-->
+<!--                 &ndash;&gt;<span th:if="${routeTable.getRoute().getDateEnd() != 'err'}"> do <span th:text="${routeTable.getRoute().getDateEnd()}"></span></span>&lt;!&ndash;-->
+<!--              &ndash;&gt;</span>&lt;!&ndash;-->
+            </p>
+            <span class="km001_bold">Trasa: </span><span
+            th:text="${#strings.listJoin(routeTimetable.getCitiesFromNow(), ' - ')}"></span>
+            <div th:if="${#lists.size(timetable.getSchedules()) < 3}" style="height: 5px"></div>
+            <div th:else style="height: 0"></div>
+            <span class="km001_bold">Przystanki:</span>
+            <span th:each="routeConnection,iter: ${routeTimetable.getRouteConnectionsFromNow()}" th:with="size=${#lists.size(routeTimetable.getRouteConnectionsFromNow())}">
+                <span th:text="${routeConnection.getStop().getName()}"></span>
+                <span th:if="${routeConnection.getIsOptional() == 1}"> n/ż</span>
+                <span th:if="${iter.index < size - 1}">>>></span>
+            </span>
+          </td>
+        </tr>
+<!--        <tr class="km001_no-border-bottom">-->
+<!--          <td colspan="2" class="km001_no-border-bottom">-->
+<!--            <table class="km001_departures-table km001_table-border km001_no-border-left km001_no-border-bottom km001_no-border-right"-->
+<!--                   th:each="rowNumber: ${#numbers.sequence(0,2)}"-->
+<!--                   th:with="departures=${rowNumber == 0 ? routeTable.getDepartures().getRo() : (rowNumber == 1 ? routeTable.getDepartures().getWs() : routeTable.getDepartures().getSw())}">-->
+<!--              <tr class="km001_no-border-left km001_no-border-right">-->
+<!--                <td colspan="9" class="km001_day-cell km001_no-border-left km001_no-border-right">-->
+<!--                  <span th:if="${rowNumber == 0}">PONIEDZIAŁEK - PIĄTEK OPRÓCZ ŚWIĄT</span>-->
+<!--                  <span th:if="${rowNumber == 1}">SOBOTY</span>-->
+<!--                  <span th:if="${rowNumber == 2}">NIEDZIELE I ŚWIĘTA</span>-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--              <span th:if="${#lists.size(departures)} > 0" th:with="size=${#lists.size(departures)}" th:remove="tag">-->
+<!--                <tr th:each="i: ${#numbers.sequence(0, (size / 10))}" class="km001_no-border-left km001_no-border-right km001_departure-row">-->
+<!--                  <td th:each="j: ${#numbers.sequence(1, 9)}"-->
+<!--                      th:with="index=${i * 9 + j - 1}"-->
+<!--                      th:attr="class=${j == 1 ? 'km001_cell-departure km001_no-border-left' : (j == 9 ? 'km001_cell-departure km001_no-border-right' : 'km001_cell-departure')}"-->
+<!--                      valign="middle"-->
+<!--                      align="center"-->
+<!--                  >-->
+<!--                    <span th:if="${index < size}" th:with="symbols=${departures[index].getSymbolArray()}">-->
+<!--                      <span-->
+<!--                        th:classappend="${#lists.contains(symbols, &quot;G&quot;) or #lists.contains(symbols, &quot;D&quot;) or #lists.contains(symbols, &quot;GD&quot;) or  #lists.contains(symbols, &quot;K&quot;) or #lists.contains(symbols, &quot;T&quot;) or #lists.contains(symbols, &quot;KT&quot;) or #lists.contains(symbols, &quot;P&quot;)} ? km001_symbol_n : km001_symbol_none">-->
+<!--                        <span th:text="${#strings.length(departures[index].getD()) == 4 ? '0' + departures[index].getD() : departures[index].getD()  }"></span>&lt;!&ndash;-->
+<!--                        &ndash;&gt;<span class="km001_symbol_b" th:if="${#lists.contains(symbols, &quot;X&quot;)}">X</span>&lt;!&ndash;-->
+<!--                        &ndash;&gt;<span class="km001_symbol_b" th:if="${#lists.contains(symbols, &quot;R&quot;)}">R</span>&lt;!&ndash;-->
+<!--                        &ndash;&gt;<span class="km001_symbol_b" th:if="${#lists.contains(symbols, &quot;M&quot;)}">X</span>&lt;!&ndash;-->
+<!--                        &ndash;&gt;<span class="km001_symbol_b" th:if="${#lists.contains(symbols, &quot;x&quot;)}">x</span>&lt;!&ndash;-->
+<!--                        &ndash;&gt;<span class="km001_symbol_b" th:if="${#lists.contains(symbols, &quot;z&quot;)}">z</span>&lt;!&ndash;-->
+<!--                        &ndash;&gt;<span class="km001_symbol_b" th:if="${#lists.contains(symbols, &quot;b&quot;) and rowNumber == 2}">b</span>&lt;!&ndash;-->
+<!--                        &ndash;&gt;<span class="km001_symbol_b" th:if="${#lists.contains(symbols, &quot;a&quot;) and rowNumber == 2}">a</span>&lt;!&ndash;-->
+<!--                        &ndash;&gt;<span class="km001_symbol_b" th:if="${#lists.contains(symbols, &quot;g&quot;) and rowNumber == 2}">g</span>&lt;!&ndash;-->
+<!--                        &ndash;&gt;<span class="km001_symbol_b" th:if="${#lists.contains(symbols, &quot;m&quot;) and rowNumber == 2}">m</span>-->
+<!--                      </span>-->
+
+<!--                      <span th:if="${#lists.contains(symbols, &quot;P&quot;)}"><img th:src="${driveUrl} + 'train_symbol.png'" class="km001_train-symbol"/></span>-->
+<!--                      <span th:if="${#lists.contains(symbols, &quot;K&quot;)}"><img th:src="${driveUrl} + 'train_symbol.png'" class="km001_train-symbol"/> K</span>-->
+<!--                      <span th:if="${#lists.contains(symbols, &quot;T&quot;)}"><img th:src="${driveUrl} + 'train_symbol.png'" class="km001_train-symbol"/> T</span>-->
+<!--                      <span th:if="${#lists.contains(symbols, &quot;KT&quot;)}"><img th:src="${driveUrl} + 'train_symbol.png'" class="km001_train-symbol"/> KT</span>-->
+<!--                      <span th:if="${#lists.contains(symbols, &quot;G&quot;)}"><img th:src="${driveUrl} + 'train_symbol.png'" class="km001_train-symbol"/> K</span>-->
+<!--                      <span th:if="${#lists.contains(symbols, &quot;D&quot;)}"><img th:src="${driveUrl} + 'train_symbol.png'" class="km001_train-symbol"/> T</span>-->
+<!--                      <span th:if="${#lists.contains(symbols, &quot;GD&quot;)}"><img th:src="${driveUrl} + 'train_symbol.png'" class="km001_train-symbol"/> KT</span>-->
+<!--                    </span>-->
+<!--                  </td>-->
+<!--                </tr>-->
+<!--              </span>-->
+<!--              <tr th:if="${#lists.size(departures) == 0}"-->
+<!--                  class="km001_no-border-left km001_no-border-bottom km001_no-border-right km001_box-no-departures km001_no-border-left km001_no-border-right">-->
+<!--                <td colspan="9" class="km001_no-border-left km001_no-border-bottom km001_no-border-right km001_box-no-departures km001_no-border-left km001_no-border-right">-->
+<!--                  Brak odjazdów-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--            </table>-->
+<!--          </td>-->
+<!--        </tr>-->
+      </table>
+    </td>
+  </tr>
+  </span>
+<!--  <tr class="km001_no-border-top">-->
+<!--    <td colspan="3" class="km001_footer km001_no-border-top">-->
+<!--      <table class="km001_footer-table km001_no-border-top">-->
+<!--        <tr class="km001_no-border-top">-->
+<!--          <td class="km001_no-border-top">-->
+<!--            <p>Legenda:</p>-->
+<!--            <p>-->
+<!--              n/ż - przystanek na żądanie<br/>-->
+<!--              <span th:each="destination,iter: ${destinations}" th:with="destinationArray=${#strings.arraySplit(destination, '|')}">-->
+<!--                <span th:if="${destinationArray[0] == &quot;K&quot;}">-->
+<!--                  <span class="km001_symbol_n">00:00</span>-->
+<!--                  <img th:src="${driveUrl} + 'train_symbol.png'" class="km001_train-symbol" height="10px"/>-->
+<!--                  <span class="km001_bold">K</span>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;T&quot;}">-->
+<!--                  <span class="km001_symbol_n">00:00</span>-->
+<!--                  <img th:src="${driveUrl} + 'train_symbol.png'" class="km001_train-symbol" height="10px"/>-->
+<!--                  <span class="km001_bold">T</span>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;G&quot;}">-->
+<!--                  <span class="km001_symbol_n">00:00</span>-->
+<!--                  <img th:src="${driveUrl} + 'train_symbol.png'" class="km001_train-symbol" height="10px"/>-->
+<!--                  <span class="km001_bold">K</span>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;D&quot;}">-->
+<!--                  <span class="km001_symbol_n">00:00</span>-->
+<!--                  <img th:src="${driveUrl} + 'train_symbol.png'" class="km001_train-symbol" height="10px"/>-->
+<!--                  <span class="km001_bold">T</span>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;P&quot;}">-->
+<!--                  <span class="km001_symbol_n">00:00</span>-->
+<!--                  <img th:src="${driveUrl} + 'train_symbol.png'" class="km001_train-symbol" height="10px"/>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;b&quot;}">-->
+<!--                  <span class="km001_bold">b</span>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;g&quot;}">-->
+<!--                  <span class="km001_bold">g</span>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;m&quot;}">-->
+<!--                  <span class="km001_bold">m</span>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;a&quot;}">-->
+<!--                  <span class="km001_bold">a</span>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;M&quot;}">-->
+<!--                  <span class="km001_bold">X</span>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;X&quot;}">-->
+<!--                  <span class="km001_bold">X</span>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;R&quot;}">-->
+<!--                  <span class="km001_bold">R</span>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;x&quot;}">-->
+<!--                  <span class="km001_bold">x</span>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;z&quot;}">-->
+<!--                  <span class="km001_bold">z</span>-->
+<!--                </span>-->
+<!--                <span th:if="${destinationArray[0] == &quot;n&quot;}">-->
+<!--                  <span class="km001_symbol_n">00:00</span>-->
+<!--                </span>-->
+<!--                - <span th:text="${destinationArray[1]}"></span>-->
+<!--                <br/>-->
+<!--              </span>-->
+<!--            </p>-->
+<!--          </td>-->
+<!--          <td class="km001_align-right" align="right" valign="top">-->
+<!--            <img th:src="${driveUrl} + 'malopolska.png'" height="1.2cm" style="margin-top: 6px"/>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      </table>-->
+<!--      <br th:if="${#lists.size(routes) < 3}"/>-->
+<!--      <center><p class="km001_info-tile">Linie użyteczności publicznej - organizator Marszałek Województwa Małopolskiego [U]</p></center>-->
+<!--      <center class="km001_website-url">kolejemalopolskie.com.pl</center>-->
+<!--    </td>-->
+<!--  </tr>-->
+</table>

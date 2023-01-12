@@ -1,0 +1,245 @@
+@page {
+    padding: 0;
+    margin: 0;
+    size: A4;
+}
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("../base/fonts/opensans.ttf");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("../base/fonts/opensansb.ttf");
+    font-weight: bold;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.km001_main-table {
+    width: 660px;
+    margin: 1cm auto 0;
+    font-weight: normal;
+    font-family: "Open Sans", serif;
+}
+
+.km001_no-border {
+    border: none;
+}
+
+.km001_table-no-border, .km001_table-no-border tr, .km001_table-no-border td  {
+    border: none;
+}
+
+.km001_table-border, .km001_table-border tr, .km001_table-border td  {
+    border: solid 1px #000;
+    border-collapse: collapse;
+}
+
+
+
+.km001_no-border-top {
+    border-top: none;
+}
+
+.km001_no-border-bottom {
+    border-bottom: none;
+}
+
+.km001_no-border-left {
+    border-left: none !important;
+}
+
+
+.km001_no-border-right {
+    border-right: none !important;
+}
+
+.km001_border-bottom {
+    border-bottom: solid 1px #000;
+}
+
+table, td, tr {
+    border: solid 1px #000;
+    border-collapse: collapse;
+}
+
+.km001_day-cell {
+    text-align: center;
+    text-transform: uppercase;
+    background: #FFE599;
+    font-size: 10px;
+    padding: 3px;
+}
+
+.km001_day-cell span {
+    font-weight: bold;
+    color: #000;
+}
+
+.km001_departures-table {
+    width: 100%;
+}
+
+.km001_symbol_b {
+    font-weight: bold;
+}
+
+.km001_bus-line-box {
+    width: 30%;
+    min-height: 80px;
+    max-height: 130px;
+}
+
+.km001_bus-line-name {
+    font-size: 51px;
+    font-weight: bold;
+}
+
+.km001_bold {
+    font-weight: bold;
+}
+
+.km001_route-cell__destination {
+    background-color: #CC0000;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 4px;
+    width: 70%;
+}
+
+.km001_route-cell__destination span {
+    font-weight: bold;
+}
+
+.km001_route-cell__details {
+    color: #000000;
+    font-size: 8px;
+    padding: 4px 0 4px 0;
+    min-height: 0.5cm;
+}
+
+.km001_cell-departure, .km001_cell-departure span {
+    font-weight: bold;
+    font-size: 10px;
+    text-align: center;
+    width: 11.5%;
+    vertical-align: middle;
+}
+
+.km001_train-symbol {
+    height: 10px;
+    margin-left: 2px;
+    margin-top: 2px;
+    vertical-align: middle;
+}
+
+.km001_symbol_n {
+    color: red;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 10px;
+}
+
+.km001_symbol_none {
+    padding-top: 4px;
+}
+
+.km001_departure-row {
+    width: 100%;
+}
+
+.km001_header-spacing {
+    width: 2cm;
+}
+
+.km001_box-no-departures {
+    text-align: center;
+    font-size: 12px;
+    padding: 2px;
+    font-style: italic;
+}
+
+.km001_header-cell {
+    text-align: center;
+    padding: 15px 0 0 0;
+}
+
+.km001_header-cell p {
+    text-align: center;
+    font-weight: bold;
+    font-size: 9px;
+}
+
+.km001_header-cell-right {
+    padding-left: 150px;
+}
+
+.km001_header-cell-left {
+    padding-right: 150px;
+}
+
+.km001_header-cell img {
+    height: 50px;
+}
+
+.km001_footer  {
+    padding: 5px;
+}
+
+.km001_footer-table {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.km001_footer-table, .km001_footer-table tr, .km001_footer-table td {
+    border:none;
+}
+
+.km001_footer-table span, .km001_footer-table p {
+    font-size: 9px;
+}
+
+.km001_footer-table img {
+    height: 46px;
+}
+
+.km001_align-right {
+    text-align: right;
+}
+
+.km001_info-tile {
+    font-size: 9px;
+}
+
+.km001_website-url {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.km001_bus-stop-name, .km001_bus-stop-name span {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.km001_version-name, .km001_version-name span {
+    font-size: 10px;
+}
+
+.km001_header-title {
+    padding-bottom: 9px;
+}
+
+.km001_logo {
+    height: 100%;
+}
+
+.km001_details-row {
+    min-height: 2.6cm;
+}
