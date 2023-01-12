@@ -2,14 +2,16 @@ package org.example.builders;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.models.schedule.RouteModel;
+import org.example.utils.TimetableTemplateResolver;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.io.IOException;
+import java.util.*;
 
 @Getter
 @Setter
 public class TimetablePageStructure {
+    static String htmlFooter = "</body></html>";
     List<Template> structure;
 
     public TimetablePageStructure() {
@@ -20,52 +22,95 @@ public class TimetablePageStructure {
         this.structure = structure;
     }
 
-    public void add(TimetableTemplate timetableTemplate, StopTimetableData stopTimetableData) {
+    public void add(TimetableTemplateModel timetableTemplate, SingleTimetableData stopSingleTimetableData) {
         if (timetableTemplate.isMultipleTemplate()) {
-            addOrCreateMultitemplateIfExists(timetableTemplate, stopTimetableData);
+            addOrCreateMultitemplateIfExists(timetableTemplate, stopSingleTimetableData);
         } else {
-            structure.add(new SingleTemplate(timetableTemplate, stopTimetableData));
+            structure.add(new SingleTemplate(timetableTemplate, stopSingleTimetableData, stopSingleTimetableData.getRoute()));
         }
     }
+    
+    public List<RouteModel> getPageRoutes() {
+        Set<RouteModel> routes = new HashSet<>();
+        for (Template template : structure) {
+                routes.addAll(template.getRoutes());
+        }
+        return new ArrayList<>(routes);
+    }
 
-    private void addOrCreateMultitemplateIfExists(TimetableTemplate timetableTemplate, StopTimetableData stopTimetableData) {
+    private void addOrCreateMultitemplateIfExists(TimetableTemplateModel timetableTemplate, SingleTimetableData stopSingleTimetableData) {
         if( structure.isEmpty() ) {
-            structure.add(new MultiTemplate(timetableTemplate, List.of(stopTimetableData)));
+            structure.add(new MultiTemplate(timetableTemplate, List.of(stopSingleTimetableData), List.of(stopSingleTimetableData.getRoute())));
             return;
         }
         for (Template template : structure) {
             if (template instanceof MultiTemplate multiTemplate && multiTemplate.getTimetableTemplate().equals(timetableTemplate)) {
-                multiTemplate.add(stopTimetableData);
+                multiTemplate.add(stopSingleTimetableData, stopSingleTimetableData.getRoute());
                 return;
             } else {
-                structure.add(new MultiTemplate(timetableTemplate, List.of(stopTimetableData)));
+                structure.add(new MultiTemplate(timetableTemplate, List.of(stopSingleTimetableData), List.of(stopSingleTimetableData.getRoute())));
             }
         }
+
+    }
+    private String getHtmlHeader(String title) throws IOException {
+        List<String> timetableIds = new ArrayList<>();
+        for(Template template : structure) {
+            timetableIds.add(template.getTimetableTemplate().getId());
+        }
+        HashMap<String, Object> variables = new HashMap<>();
+        variables.put("title", title);
+        variables.put("timetableTemplates", timetableIds);
+        
+        return TimetableTemplateResolver.resolveBaseFile("header", variables);
     }
 
+    public String buildHtml() throws IOException {
+        StringBuilder htmlBuilder = new StringBuilder();
+        htmlBuilder.append(getHtmlHeader(""));
+        for (TimetablePageStructure.Template template : structure) {
+            TimetableTemplateModel timetableTemplate = template.getTimetableTemplate();
+            htmlBuilder.append(timetableTemplate.process(template));
+        }
+        htmlBuilder.append(htmlFooter);
+
+        return htmlBuilder.toString();
+    }
 
     public interface Template {
-        TimetableTemplate getTimetableTemplate();
+        TimetableTemplateModel getTimetableTemplate();
+        
+        List<RouteModel> getRoutes();
+
+        TimetableData getTimeTableData();
     }
 
     @Getter
     @Setter
     public static class MultiTemplate implements Template {
-        List<StopTimetableData> schedules;
-        TimetableTemplate timetableTemplate;
+        List<SingleTimetableData> schedules;
+        TimetableTemplateModel timetableTemplate;
+        List<RouteModel> routes;
+        MultiTimetableData timetableData;
         
-        public MultiTemplate(TimetableTemplate timetableTemplate) {
+        public MultiTemplate(TimetableTemplateModel timetableTemplate, List<RouteModel> routes) {
             this.timetableTemplate = timetableTemplate;
+            this.routes = new ArrayList<>(routes);
             this.schedules = new ArrayList<>();
+            this.timetableData = new MultiTimetableData();
         }
         
-        public MultiTemplate(TimetableTemplate timetableTemplate, List<StopTimetableData> schedules) {
+        public MultiTemplate(TimetableTemplateModel timetableTemplate, List<SingleTimetableData> schedules, List<RouteModel> routes) {
             this.timetableTemplate = timetableTemplate;
+            this.routes = new ArrayList<>(routes);
             this.schedules = new ArrayList<>(schedules);
+            this.timetableData = new MultiTimetableData(schedules);
         }
 
-        void add(StopTimetableData stopTimetableData) {
-            schedules.add(stopTimetableData);
+        void add(SingleTimetableData stopSingleTimetableData, RouteModel routeModel) {
+            schedules.add(stopSingleTimetableData);
+            timetableData = new MultiTimetableData(schedules);
+            routes.add(routeModel);
         }
 
         @Override
@@ -87,29 +132,47 @@ public class TimetablePageStructure {
                     ", timetableTemplate=" + timetableTemplate +
                     '}';
         }
+        
+        @Override
+        public TimetableData getTimeTableData() {
+            return timetableData;
+        }
     }
 
     @Getter
     @Setter
     public static class SingleTemplate implements Template {
-        StopTimetableData schedule;
-        TimetableTemplate timetableTemplate;
+        SingleTimetableData timetableData;
+        TimetableTemplateModel timetableTemplate;
+        
+        RouteModel route;
 
-        public SingleTemplate(TimetableTemplate timetableTemplate, StopTimetableData schedule) {
+        public SingleTemplate(TimetableTemplateModel timetableTemplate, SingleTimetableData timetableData, RouteModel route) {
             this.timetableTemplate = timetableTemplate;
-            this.schedule = schedule;
+            this.timetableData = timetableData;
+            this.route = route;
+        }
+
+        @Override
+        public List<RouteModel> getRoutes() {
+            return List.of(route);
         }
 
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (!(o instanceof SingleTemplate that)) return false;
-            return Objects.equals(schedule, that.schedule) && Objects.equals(timetableTemplate, that.timetableTemplate);
+            return Objects.equals(timetableData, that.timetableData) && Objects.equals(timetableTemplate, that.timetableTemplate);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(schedule, timetableTemplate);
+            return Objects.hash(timetableData, timetableTemplate);
+        }
+
+        @Override
+        public TimetableData getTimeTableData() {
+            return timetableData;
         }
     }
 

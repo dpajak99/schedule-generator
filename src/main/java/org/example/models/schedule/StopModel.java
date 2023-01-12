@@ -2,36 +2,35 @@ package org.example.models.schedule;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Getter
+@Setter
 @NoArgsConstructor
-@Entity
-@Table(name = "bus_stops", schema="schedule")
 public class StopModel {
-    @Id
-    @Column(name = "id")
     private Long id;
-
-    @Column(name = "name")
     private String name;
-    
-    @Column(name = "search_name")
     private String searchName;
-
-    @Column(name = "destinations")
     private String destinations;
-
-    @Column(name = "city")
     private String city;
-
-    @Column(name = "lat")
     private Double lat;
-    
-    @Column(name = "lng")
     private Double lng;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof StopModel stopModel)) return false;
+        return Objects.equals(id, stopModel.id) && Objects.equals(name, stopModel.name) && Objects.equals(searchName, stopModel.searchName) && Objects.equals(destinations, stopModel.destinations) && Objects.equals(city, stopModel.city) && Objects.equals(lat, stopModel.lat) && Objects.equals(lng, stopModel.lng);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, searchName, destinations, city, lat, lng);
+    }
 }

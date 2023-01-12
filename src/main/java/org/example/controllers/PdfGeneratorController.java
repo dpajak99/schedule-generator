@@ -8,10 +8,7 @@ import org.example.infra.services.generator.impl.TimetableGeneratorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
@@ -25,7 +22,7 @@ public class PdfGeneratorController {
     }
 
     @PostMapping({"/timetable"})
-    public ResponseEntity<GenerateTimetableResponse> generateTimetable(GenerateTimetableRequest generateTimetableRequest) {
+    public ResponseEntity<GenerateTimetableResponse> generateTimetable(@RequestBody GenerateTimetableRequest generateTimetableRequest) {
         try {
             GenerateTimetableResponse generateTimetableResponse = timetableGeneratorService.generateTimetable(generateTimetableRequest);
             return new ResponseEntity<>(generateTimetableResponse, HttpStatus.OK);

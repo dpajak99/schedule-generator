@@ -8,7 +8,4 @@ import lombok.NoArgsConstructor;
 public class RouteConfigDto {
     @JsonProperty("route_id")
     private Long routeId;
-    
-    @JsonProperty("template")
-    private String template;
 }

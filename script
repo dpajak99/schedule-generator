@@ -1,0 +1,13 @@
+git filter-branch --env-filter '
+WRONG_DATE="Tue Dec 6 01:04:16 2022 +0100"
+NEW_NAME="Menji"
+NEW_EMAIL="bartoszit8@gmail.com"
+
+if [ "$GIT_AUTHOR_DATE" = "$WRONG_DATE" ]
+then
+    export GIT_COMMITTER_NAME="$NEW_NAME"
+    export GIT_COMMITTER_EMAIL="$NEW_EMAIL"
+    export GIT_AUTHOR_NAME="$NEW_NAME"
+    export GIT_AUTHOR_EMAIL="$NEW_EMAIL"
+fi
+' --tag-name-filter cat -- --branches --tags

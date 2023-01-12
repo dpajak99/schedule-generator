@@ -2,15 +2,15 @@ package org.example;
 
 import junit.framework.TestCase;
 import org.example.builders.StopTimetableConfig;
-import org.example.builders.TimetableBuilder;
+import org.example.builders.TimetableDocumentBuilder;
 import org.example.builders.TimetablePageStructure;
-import org.example.builders.TimetableTemplate;
+import org.example.builders.TimetableTemplateModel;
 
 import java.util.List;
 
 public class TimetableBuilderTest extends TestCase {
-    TimetableTemplate km001TimetableTemplate = new TimetableTemplate("km001");
-    TimetableTemplate mich001TimetableTemplate = new TimetableTemplate("mich001");
+    TimetableTemplateModel km001TimetableTemplate = new TimetableTemplateModel("km001");
+    TimetableTemplateModel mich001TimetableTemplate = new TimetableTemplateModel("mich001");
     StopTimetableConfig a1From = new StopTimetableConfig();
     StopTimetableConfig a1To = new StopTimetableConfig();
     StopTimetableConfig a2From = new StopTimetableConfig();
@@ -34,26 +34,26 @@ public class TimetableBuilderTest extends TestCase {
         TimetablePageStructure actualTimetablePageStructure;
         TimetablePageStructure expectedTimetablePageStructure;
 
-        TimetableBuilder timetableBuilder = new TimetableBuilder();
+        TimetableDocumentBuilder timetableBuilder = new TimetableDocumentBuilder();
 
         List<StopTimetableConfig> stopTimetablesData1 = List.of(a1From);
         actualTimetablePageStructure = timetableBuilder.getTimetablePageStructure(stopTimetablesData1);
-        expectedTimetablePageStructure = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getTimetableData()))));
+        expectedTimetablePageStructure = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getSingleTimetableData()))));
         assertEquals(expectedTimetablePageStructure, actualTimetablePageStructure);
 
         List<StopTimetableConfig> stopTimetablesData2 = List.of(a1From, a2From);
         actualTimetablePageStructure = timetableBuilder.getTimetablePageStructure(stopTimetablesData2);
-        expectedTimetablePageStructure = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getTimetableData(), a2From.getTimetableData()))));
+        expectedTimetablePageStructure = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getSingleTimetableData(), a2From.getSingleTimetableData()))));
         assertEquals(expectedTimetablePageStructure, actualTimetablePageStructure);
 
         List<StopTimetableConfig> stopTimetablesData3 = List.of(a1From, a2From, t10From);
         actualTimetablePageStructure = timetableBuilder.getTimetablePageStructure(stopTimetablesData3);
-        expectedTimetablePageStructure = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getTimetableData(), a2From.getTimetableData())), new TimetablePageStructure.SingleTemplate(mich001TimetableTemplate, t10From.getTimetableData())));
+        expectedTimetablePageStructure = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getSingleTimetableData(), a2From.getSingleTimetableData())), new TimetablePageStructure.SingleTemplate(mich001TimetableTemplate, t10From.getSingleTimetableData())));
         assertEquals(expectedTimetablePageStructure, actualTimetablePageStructure);
 
         List<StopTimetableConfig> stopTimetablesData4 = List.of(a1From, a1To, a2From, a2To, t10From, t10To);
         actualTimetablePageStructure = timetableBuilder.getTimetablePageStructure(stopTimetablesData4);
-        expectedTimetablePageStructure = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getTimetableData(), a1To.getTimetableData(), a2From.getTimetableData(), a2To.getTimetableData())), new TimetablePageStructure.SingleTemplate(mich001TimetableTemplate, t10From.getTimetableData()), new TimetablePageStructure.SingleTemplate(mich001TimetableTemplate, t10To.getTimetableData())));
+        expectedTimetablePageStructure = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getSingleTimetableData(), a1To.getSingleTimetableData(), a2From.getSingleTimetableData(), a2To.getSingleTimetableData())), new TimetablePageStructure.SingleTemplate(mich001TimetableTemplate, t10From.getSingleTimetableData()), new TimetablePageStructure.SingleTemplate(mich001TimetableTemplate, t10To.getSingleTimetableData())));
         assertEquals(expectedTimetablePageStructure, actualTimetablePageStructure);
     }
 
@@ -61,12 +61,12 @@ public class TimetableBuilderTest extends TestCase {
         String actualHtml;
         String expectedHtml;
 
-        TimetableBuilder timetableBuilder = new TimetableBuilder();
+        TimetableDocumentBuilder timetableBuilder = new TimetableDocumentBuilder();
         
-        TimetablePageStructure timetablePageStructure1 = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getTimetableData()))));
-        TimetablePageStructure timetablePageStructure2 = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getTimetableData(), a2From.getTimetableData()))));
-        TimetablePageStructure timetablePageStructure3 = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getTimetableData(), a2From.getTimetableData())), new TimetablePageStructure.SingleTemplate(mich001TimetableTemplate, t10From.getTimetableData())));
-        TimetablePageStructure timetablePageStructure4 = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getTimetableData(), a1To.getTimetableData(), a2From.getTimetableData(), a2To.getTimetableData())), new TimetablePageStructure.SingleTemplate(mich001TimetableTemplate, t10From.getTimetableData()), new TimetablePageStructure.SingleTemplate(mich001TimetableTemplate, t10To.getTimetableData())));
+        TimetablePageStructure timetablePageStructure1 = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getSingleTimetableData()))));
+        TimetablePageStructure timetablePageStructure2 = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getSingleTimetableData(), a2From.getSingleTimetableData()))));
+        TimetablePageStructure timetablePageStructure3 = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getSingleTimetableData(), a2From.getSingleTimetableData())), new TimetablePageStructure.SingleTemplate(mich001TimetableTemplate, t10From.getSingleTimetableData())));
+        TimetablePageStructure timetablePageStructure4 = new TimetablePageStructure(List.of(new TimetablePageStructure.MultiTemplate(km001TimetableTemplate, List.of(a1From.getSingleTimetableData(), a1To.getSingleTimetableData(), a2From.getSingleTimetableData(), a2To.getSingleTimetableData())), new TimetablePageStructure.SingleTemplate(mich001TimetableTemplate, t10From.getSingleTimetableData()), new TimetablePageStructure.SingleTemplate(mich001TimetableTemplate, t10To.getSingleTimetableData())));
 
         actualHtml = timetableBuilder.buildHtml(timetablePageStructure1);
         expectedHtml = "OK";

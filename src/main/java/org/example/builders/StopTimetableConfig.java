@@ -2,12 +2,15 @@ package org.example.builders;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.models.schedule.RouteModel;
+import org.example.models.schedule.StopModel;
 
 @Getter
 @Setter
 public class StopTimetableConfig {
-    private String routeId;
-    private StopTimetableData timetableData = new StopTimetableData();
-    private TimetableTemplate timetableTemplate;
+    private RouteModel route;
+    private StopModel stop;
+    private SingleTimetableData singleTimetableData = new SingleTimetableData();
+    private TimetableTemplateModel timetableTemplate;
 }
 

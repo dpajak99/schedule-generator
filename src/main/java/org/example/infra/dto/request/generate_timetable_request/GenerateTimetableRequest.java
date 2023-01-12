@@ -13,6 +13,19 @@ public class GenerateTimetableRequest {
 
     @JsonProperty("max_templates_per_page")
     private int maxTemplatesPerPage;
+
+    @JsonProperty("template_id")
+    private String templateId;
+    
     @JsonProperty("route_config_list")
     private List<RouteConfigDto> routeConfigDtoList;
+
+    @Override
+    public String toString() {
+        return "GenerateTimetableRequest{" +
+                "maxTemplatesPerPage=" + maxTemplatesPerPage +
+                ", templateId='" + templateId + '\'' +
+                ", routeConfigDtoList=" + routeConfigDtoList +
+                '}';
+    }
 }

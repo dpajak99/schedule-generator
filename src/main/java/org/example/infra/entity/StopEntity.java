@@ -3,8 +3,10 @@ package org.example.infra.entity;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "bus_stops", schema="schedule")
