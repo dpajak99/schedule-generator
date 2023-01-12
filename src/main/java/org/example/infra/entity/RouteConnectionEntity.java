@@ -3,8 +3,10 @@ package org.example.infra.entity;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "routes_connections", schema = "schedule")
@@ -20,7 +22,7 @@ public class RouteConnectionEntity {
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "bus_stop_id", referencedColumnName = "id")
-    private StopEntity busStop;
+    private StopEntity stop;
 
     @Column(name = "is_optional")
     private Long isOptional;
