@@ -1,0 +1,117 @@
+<div style="height: 175mm">
+    <table class="bordered-table w-100">
+        <tr>
+            <td rowspan="3" class="bus-line-cell">
+                <span class="bus-line-name" th:text="${busLine.getName()}"></span>
+            </td>
+            <td class="p-0">
+                <table class="not-bordered-table w-100">
+                    <tr>
+                        <td>
+                            <img class="company-logo" th:src="${driveUrl} + 'sublogo.png'"/>
+                        </td>
+                        <td>
+                            <p class="company-name">GMINNA KOMUNIKACJA PUBLICZNA</p>
+                            <p class="company-address">
+                                "Michalus" Firma Przewozowa Michał Bodzioch<br/>
+                                Dziekanowice 49, 32-410 Dobczyce<br/>
+                                www.gkp.tarnow.pl tel. 516 865 266
+                            </p>
+                        </td>
+                        <td>
+                           <img class="company-logo" th:src="${driveUrl} + 'logo_signet.png'"/>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="bus-stop-name" th:text="${busStop.getName()}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Kierunek: <span th:text="${route.getDetails()}" style="font-weight: bold"></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="day-box" style="background-color: #FDF7C9">
+                <div class="day-name__name">Dni robocze</div>
+                <div class="day-name__subtext">z wyjątkiem 2 maja i 24 grudnia, jeżeli wypadają w dni robocze</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="departures-box">
+            <span th:if="${#lists.isEmpty(departures.getRo())}">
+                <div class='empty-departures'>Brak odjazdów</div>
+            </span>
+                <span th:each="departure,iter: ${departures.getRo()}" class='departure-box'>
+                <span th:text="${departure.getHourString24() + ':' + departure.getMinutesString()}"></span><span th:if="${departure.getS()} != '-'"><span
+                        th:text="${departure.getS()}" class='symbol-box'></span></span>
+                <br th:if="(${iter.index} + 1) % 9 == 0"/>
+            </span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="day-box" style="background-color: #DEEAF7">
+                <div class="day-name__name">Soboty</div>
+                <div class="day-name__subtext">a także 2 maja i 24 grudnia, jeżeli wypadają w dni robocze</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="departures-box">
+            <span th:if="${#lists.isEmpty(departures.getWs())}">
+                <div class='empty-departures'>Brak odjazdów</div>
+            </span>
+                <span th:each="departure,iter: ${departures.getWs()}" class='departure-box'>
+                <span th:text="${departure.getHourString24() + ':' + departure.getMinutesString()}"></span><span th:if="${departure.getS()} != '-'"><span
+                        th:text="${departure.getS()}" class='symbol-box'></span></span>
+                <br th:if="(${iter.index} + 1) % 9 == 0"/>
+            </span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="day-box" style="background-color: #DEF4D8">
+                <div class="day-name__name">Niedziele i święta</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="departures-box">
+            <span th:if="${#lists.isEmpty(departures.getSw())}">
+                <div class='empty-departures'>Brak odjazdów</div>
+            </span>
+                <span th:each="departure,iter: ${departures.getSw()}" class='departure-box'>
+                <span th:text="${departure.getHourString24() + ':' + departure.getMinutesString()}"></span><span th:if="${departure.getS()} != '-'"><span
+                        th:text="${departure.getS()}" class='symbol-box'></span></span>
+                <br th:if="(${iter.index} + 1) % 9 == 0"/>
+            </span>
+            </td>
+        </tr>
+    </table>
+    <div class="p-10 warning-box">
+        Czas odjazdów mogą ulec zmianie w zależności od warunków drogowych. Jako odjazd punktualny traktowany jest
+        odjazd
+        wykonany w przedziale od -1 do +3 minuty w odniesieniu do planowanego rozkładu jazdy.
+    </div>
+    <div class="align-left p-0 destinations-box">
+        <b>Oznaczenia:</b><br/>
+        <div th:each="destination: ${destinations}" class="p-0 align-left">
+            <span th:text="${destination}"></span>
+        </div>
+    </div>
+</div>
+<table class="w-100 footer">
+    <tr>
+        <td class="align-left p-0" valign="bottom">
+            Obowiązuje od: <span th:text="${version.getDate()}" style="font-weight: bold"></span>
+        </td>
+        <td valign="bottom" class="p-0">
+            www.<b>gkp</b>.tarnow.pl
+        </td>
+        <td class="align-right p-0" valign="bottom">
+            <div class="p-0 align-right"><img th:src="${qrCode}" class="tarbus-qr-code" src="" alt="tarbusqr"/></div>
+            Pobierz aplikację <b>tarBUS</b>
+        </td>
+    </tr>
+</table>
