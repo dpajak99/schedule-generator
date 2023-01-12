@@ -1,9 +1,9 @@
 package org.example.infra.services.generator.impl;
 
-import org.example.builders.RouteTimetable;
-import org.example.builders.StopTimetableConfig;
-import org.example.builders.SingleTimetableData;
-import org.example.builders.TimetableTemplateModel;
+import org.example.models.RouteTimetable;
+import org.example.models.StopTimetableConfig;
+import org.example.models.timetable_data.SingleTimetableData;
+import org.example.models.schedule.TimetableTemplateModel;
 import org.example.infra.services.generator.TimetableService;
 import org.example.infra.services.jpa.RouteConnectionService;
 import org.example.infra.services.jpa.RouteService;

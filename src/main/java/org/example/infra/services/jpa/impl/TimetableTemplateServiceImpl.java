@@ -1,6 +1,6 @@
 package org.example.infra.services.jpa.impl;
 
-import org.example.builders.TimetableTemplateModel;
+import org.example.models.schedule.TimetableTemplateModel;
 import org.example.infra.entity.TimetableTemplateEntity;
 import org.example.infra.repositories.jpa.TimetableTemplateRepository;
 import org.example.infra.services.jpa.RouteService;

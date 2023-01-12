@@ -1,7 +1,9 @@
-package org.example.builders;
+package org.example.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.models.RouteTimetable;
+import org.example.models.StopTimetableConfig;
 import org.example.models.schedule.StopModel;
 
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class TimetableGeneratorInput {
+public class TimetableBuilderInput {
     List<RouteTimetable> routeTimetables;
 
 

@@ -1,6 +1,6 @@
 package org.example.mappers;
 
-import org.example.builders.TimetableTemplateModel;
+import org.example.models.schedule.TimetableTemplateModel;
 import org.example.infra.entity.TimetableTemplateEntity;
 import org.example.infra.entity.TimetableTemplateType;
 import org.springframework.stereotype.Component;

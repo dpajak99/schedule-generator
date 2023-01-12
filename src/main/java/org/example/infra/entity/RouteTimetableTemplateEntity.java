@@ -21,12 +21,10 @@ public class RouteTimetableTemplateEntity {
     @NoArgsConstructor
     @Embeddable
     public static class RouteTimetableTemplateEntityId implements Serializable  {
-        @Column(name = "id")
         @OneToOne(cascade = CascadeType.REMOVE)
         @JoinColumn(name = "route_id", referencedColumnName = "id")
         private RouteEntity route;
 
-        @Column(name = "id")
         @OneToOne(cascade = CascadeType.REMOVE)
         @JoinColumn(name = "template_id", referencedColumnName = "id")
         private TimetableTemplateEntity timetableTemplate;

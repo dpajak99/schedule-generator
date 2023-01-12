@@ -1,14 +1,11 @@
-package org.example.builders;
+package org.example.models.timetable_data;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.example.models.schedule.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter

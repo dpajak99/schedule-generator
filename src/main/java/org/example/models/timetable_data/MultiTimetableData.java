@@ -1,4 +1,4 @@
-package org.example.builders;
+package org.example.models.timetable_data;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.Map;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MultiTimetableData implements TimetableData{
+public class MultiTimetableData implements TimetableData {
     StopModel stop;
     List<SymbolModel> symbols;
 

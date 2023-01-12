@@ -3,7 +3,6 @@ package org.example.infra.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.models.templates.TimetableTemplate;
 
 import javax.persistence.*;
 import java.io.Serializable;

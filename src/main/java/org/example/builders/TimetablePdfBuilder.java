@@ -2,19 +2,15 @@ package org.example.builders;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
-import com.itextpdf.io.font.PdfEncodings;
-import com.itextpdf.kernel.font.PdfFont;
-import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.utils.PdfMerger;
+import org.example.models.TimetableDocumentStructure;
+import org.example.models.TimetablePageStructure;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.itextpdf.kernel.pdf.PdfName.BaseFont;
 
 public class TimetablePdfBuilder {
     final String inputDirectory = "/home/dpajak99/Storage/GitHub/inzynierka/timetablegenerator/timetablegenerator/input/";

@@ -1,10 +1,10 @@
 package org.example;
 
 import junit.framework.TestCase;
-import org.example.builders.StopTimetableConfig;
+import org.example.models.StopTimetableConfig;
 import org.example.builders.TimetableDocumentBuilder;
-import org.example.builders.TimetablePageStructure;
-import org.example.builders.TimetableTemplateModel;
+import org.example.models.TimetablePageStructure;
+import org.example.models.schedule.TimetableTemplateModel;
 
 import java.util.List;
 

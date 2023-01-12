@@ -1,7 +1,8 @@
-package org.example.builders;
+package org.example.models.schedule;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.models.TimetablePageStructure;
 import org.example.infra.entity.TimetableTemplateType;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -11,7 +12,6 @@ import org.thymeleaf.templateresolver.StringTemplateResolver;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -24,7 +24,6 @@ public class TimetableTemplateModel {
     private TimetableTemplateType type;
     
     public String process(TimetablePageStructure.Template template) throws IOException {
-        System.out.println("Processing template: " + id);
         TemplateEngine templateEngine = new TemplateEngine();
         StringTemplateResolver templateResolver = new StringTemplateResolver();
         templateResolver.setTemplateMode(TemplateMode.HTML);
@@ -37,7 +36,7 @@ public class TimetableTemplateModel {
         return templateEngine.process(content, ctx);
     }
     
-    boolean isMultipleTemplate() {
+    public boolean isMultipleTemplate() {
         return true;
     }
 

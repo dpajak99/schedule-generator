@@ -1,7 +1,6 @@
 package org.example.infra.services.generator;
 
-import org.example.builders.RouteTimetable;
-import org.example.builders.StopTimetableConfig;
+import org.example.models.RouteTimetable;
 
 import java.util.List;
 

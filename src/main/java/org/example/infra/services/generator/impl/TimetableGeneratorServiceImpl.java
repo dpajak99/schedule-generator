@@ -8,6 +8,9 @@ import org.example.infra.dto.response.generate_timetable_response.GenerateTimeta
 import org.example.infra.services.generator.TimetableService;
 import org.example.infra.services.generator.TimetableGeneratorService;
 import org.example.infra.services.jpa.RouteService;
+import org.example.models.RouteTimetable;
+import org.example.models.TimetableBuilderInput;
+import org.example.models.TimetableBuilderOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,14 +36,14 @@ public class TimetableGeneratorServiceImpl implements TimetableGeneratorService 
         List<Long> routesId = generateTimetableRequest.getRouteConfigDtoList().stream().map(RouteConfigDto::getRouteId).toList();
         List<RouteTimetable> routeTimetables = timetableService.getRouteTimetablesByRoutesId(routesId);
 
-        TimetableGeneratorInput timetableGeneratorInput = new TimetableGeneratorInput();
-        timetableGeneratorInput.setRouteTimetables(routeTimetables);
+        TimetableBuilderInput timetableBuilderInput = new TimetableBuilderInput();
+        timetableBuilderInput.setRouteTimetables(routeTimetables);
 
-        TimetableGeneratorOutput timetableGeneratorOutput = timetableDocumentBuilder.generate(timetableGeneratorInput);
+        TimetableBuilderOutput timetableBuilderOutput = timetableDocumentBuilder.generate(timetableBuilderInput);
         
         try {
-            timetablePdfBuilder.saveAll(timetableGeneratorOutput.getSingleTimetables(), "single");
-            timetablePdfBuilder.saveAll(timetableGeneratorOutput.getSharedTimetables(), "shared");
+            timetablePdfBuilder.saveAll(timetableBuilderOutput.getSingleTimetables(), "single");
+            timetablePdfBuilder.saveAll(timetableBuilderOutput.getSharedTimetables(), "shared");
         } catch (Exception e) {
             throw new RuntimeException("Cannot save timetables: " + e);
         }

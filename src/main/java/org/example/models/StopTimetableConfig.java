@@ -1,7 +1,9 @@
-package org.example.builders;
+package org.example.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.models.schedule.TimetableTemplateModel;
+import org.example.models.timetable_data.SingleTimetableData;
 import org.example.models.schedule.RouteModel;
 import org.example.models.schedule.StopModel;
 

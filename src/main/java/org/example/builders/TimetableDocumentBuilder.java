@@ -1,14 +1,16 @@
 package org.example.builders;
 
 import lombok.Getter;
+import org.example.models.*;
 import org.example.models.schedule.RouteModel;
 import org.example.models.schedule.StopModel;
+import org.example.models.schedule.TimetableTemplateModel;
 
 import java.util.*;
 
 public class TimetableDocumentBuilder {
     
-    public TimetableGeneratorOutput generate(TimetableGeneratorInput request) {
+    public TimetableBuilderOutput generate(TimetableBuilderInput request) {
         Map<RouteModel, List<TimetablePageStructure>> singleTimetables = new HashMap<>();
         for( RouteTimetable routeTimetable : request.getRouteTimetables() ) {
             List<TimetablePageStructure> routeTimetables = new ArrayList<>();
@@ -27,8 +29,6 @@ public class TimetableDocumentBuilder {
 
             sharedTimetables.putIfAbsent(routes, new ArrayList<>());
             sharedTimetables.get(routes).add(timetablePageStructure);
-            System.out.println("routes length: " + routes.size() + "timetables length: " + sharedTimetables.get(routes).size());
-            System.out.println(sharedTimetables.keySet());
         }
 
         List<TimetableDocumentStructure> singleTimetableDocuments = new ArrayList<>();
@@ -54,22 +54,20 @@ public class TimetableDocumentBuilder {
             sharedTimetableDocuments.add(timetableDocumentStructure);
         }
         
-        TimetableGeneratorOutput timetableGeneratorOutput = new TimetableGeneratorOutput();
-        timetableGeneratorOutput.setSingleTimetables(singleTimetableDocuments);
-        timetableGeneratorOutput.setSharedTimetables(sharedTimetableDocuments);
-        return timetableGeneratorOutput;
+        TimetableBuilderOutput timetableBuilderOutput = new TimetableBuilderOutput();
+        timetableBuilderOutput.setSingleTimetables(singleTimetableDocuments);
+        timetableBuilderOutput.setSharedTimetables(sharedTimetableDocuments);
+        return timetableBuilderOutput;
     }
 
     public TimetablePageStructure getTimetablePageStructure(List<StopTimetableConfig> stopTimetablesData) {
         TimetablePageStructure timetablePageStructure = new TimetablePageStructure();
 
-        System.out.println("SHOULD BE: " + stopTimetablesData.size());
         for (StopTimetableConfig stopTimetableConfig : stopTimetablesData) {
             TimetableTemplateModel timetableTemplate = stopTimetableConfig.getTimetableTemplate();
             timetablePageStructure.add(timetableTemplate, stopTimetableConfig.getSingleTimetableData());
         }
 
-        System.out.println("IS: " + timetablePageStructure.structure.size());
         return timetablePageStructure;
     }
     
