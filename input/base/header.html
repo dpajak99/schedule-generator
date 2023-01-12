@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Example title</title>
+    
+    <link th:each="timetableTemplate,iter: ${timetableTemplates}" rel="stylesheet" th:href="${'./' + timetableTemplate +'/style.css'}">
+</head>
+<body>
